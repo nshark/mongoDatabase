@@ -6,7 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [TurbineModule, 
-    MongooseModule.forRoot("mongodb+srv://noah:uyWR4Z4ntzePcUEHFnbA@cluster0.rcccf56.mongodb.net/")],
+    MongooseModule.forRoot("mongodb+srv://noah:uyWR4Z4ntzePcUEHFnbA@cluster0.rcccf56.mongodb.net/gtnh-database")],
   controllers: [AppController],
   providers: [AppService],
 })

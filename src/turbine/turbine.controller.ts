@@ -1,10 +1,10 @@
 import { Body, Controller, Get,Post, Patch, Delete, Param  } from '@nestjs/common';
 import { turbineService } from './turbine.service';
 
-@Controller()
+@Controller('turbine')
 export class turbineController {
   constructor(private readonly turbineService: turbineService) {}
-
+  
   @Post()
   async insertMaterial(
       @Body('AddGas') AddGas:boolean,
@@ -52,7 +52,7 @@ export class turbineController {
       const generatedID = await this.turbineService.insertMaterial(AddGas,AddPlasma,AutoGenerateBlastFurnaceRecipes,BlastFurnaceRequired,BlastFurnaceTemp,ChemicalFormula,DensityDivider,DensityMultiplier,Density,DyeColor,EnchantmentLevel,Enchantment,FuelPower,FuelType,GasTemp,HasParentMod,HeatDamage,ListMaterialByProducts,ListMaterialReRegistrations,ListSubTags,ListTCAspectAmounts,ListTCAspects,MatRGBA,MaterialArcSmeltInto,MaterialDirectSmeltInto,MaterialID,MaterialMacerateInto,MaterialName,MaterialSmeltInto,MaterialTypes,MeltingPoint,OreByProductMultiplier,OreMultiplier,OreSmeltingMultiplier,OreValue,ToolDurability, ToolQuality, ToolSpeed, Transparent, Unificatable)
       return {id : generatedID}
     }
-    @Patch(':id')
+    @Get(':id')
     async getMaterialById(@Param('id') matID:string){
       const mat = await this.turbineService.findMaterial(matID)
       return mat
@@ -105,8 +105,12 @@ export class turbineController {
       await this.turbineService.updateMaterialById(matID, AddGas,AddPlasma,AutoGenerateBlastFurnaceRecipes,BlastFurnaceRequired,BlastFurnaceTemp,ChemicalFormula,DensityDivider,DensityMultiplier,Density,DyeColor,EnchantmentLevel,Enchantment,FuelPower,FuelType,GasTemp,HasParentMod,HeatDamage,ListMaterialByProducts,ListMaterialReRegistrations,ListSubTags,ListTCAspectAmounts,ListTCAspects,MatRGBA,MaterialArcSmeltInto,MaterialDirectSmeltInto,MaterialID,MaterialMacerateInto,MaterialName,MaterialSmeltInto,MaterialTypes,MeltingPoint,OreByProductMultiplier,OreMultiplier,OreSmeltingMultiplier,OreValue,ToolDurability, ToolQuality, ToolSpeed, Transparent, Unificatable)
       return null
     }
-    @Post('turbine')
-    async getTurbine(@Body('materialName') materialName:string){
+    @Get('tur/:name')
+    async getTurbine(@Param('name') materialName:string){
       return this.turbineService.getTurbineByName(materialName);
+    }
+    @Get()
+    async getAllMaterials(){
+      return this.turbineService.getAll();
     }
 }

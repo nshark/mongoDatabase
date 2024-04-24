@@ -7,10 +7,13 @@ import {turbine} from './turbine.model';
 @Injectable()
 export class turbineService{
     constructor(@InjectModel('turbine') private readonly turbineModel: Model<turbine>) {}
+    async getAll(){
+        return await this.turbineModel.find().exec();
+    }
     async getTurbineByName(materialName: string){
         const materials = await this.turbineModel.find().exec();
         const name = materials.filter(e => e.MaterialName === materialName);
-        return materials.map(c => ({
+        return name.map(c => ({
             id: c.id,
             tier: c.ToolQuality, 
             miningSpeed: c.ToolSpeed,
@@ -62,7 +65,7 @@ export class turbineService{
             Transparent:Transparent,
             Unificatable:Unificatable})
         const result = await material.save();
-        return result.id()
+        return result.id;
     }
     async updateMaterialById(materialId:string, AddGas:Boolean,AddPlasma:Boolean,AutoGenerateBlastFurnaceRecipes:Boolean,BlastFurnaceRequired:Boolean,BlastFurnaceTemp:number,ChemicalFormula:String,DensityDivider:number,DensityMultiplier:number,Density:number,DyeColor:String,EnchantmentLevel:number,Enchantment:String,FuelPower:number,FuelType:number,GasTemp:number,HasParentMod:Boolean,HeatDamage:number,ListMaterialByProducts:String,ListMaterialReRegistrations:String,ListSubTags:String,ListTCAspectAmounts:String,ListTCAspects:String,MatRGBA:String,MaterialArcSmeltInto:String,MaterialDirectSmeltInto:String,MaterialID:number,MaterialMacerateInto:String,MaterialName:String,MaterialSmeltInto:String,MaterialTypes:number,MeltingPoint:number,OreByProductMultiplier:number,OreMultiplier:number,OreSmeltingMultiplier:number,OreValue:number,ToolDurability:number, ToolQuality:number, ToolSpeed:number, Transparent:Boolean, Unificatable:Boolean){
         const updatedMaterial = await this.findMaterial(materialId);
